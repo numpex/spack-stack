@@ -1,0 +1,74 @@
+# This is a Spack Environment file.
+#
+# It describes a set of packages to be installed, along with
+# configuration settings.
+spack:
+  definitions:
+    - compilers:
+        - gcc@14.2 +binutils +bootstrap ~graphite ~libsanitizer ~mold ~nvptx ~piclibs ~profiled ~strip build_system=autotools build_type=Release
+    - apps:
+        - $compilers
+        - cmake %gcc@14.2
+        - openmpi %gcc@14.2
+        - python@3.10 %gcc@14.2
+        - pdi +python ~fortran %gcc@14.2
+        - pdiplugin-decl-hdf5 %gcc@14.2
+        - pdiplugin-mpi %gcc@14.2
+        - pdiplugin-pycall %gcc@14.2
+        - pdiplugin-user-code %gcc@14.2
+        - pdiplugin-set-value %gcc@14.2
+        - pdiplugin-trace %gcc@14.2
+        - py-deisa-dask
+  specs:
+    # Compiler group - Bootstrap gcc using the system compiler
+    - group: compiler
+      specs:
+        - $compilers
+
+#    - group: apps-x86_64_v2
+#      needs: [compiler]
+#      specs: [$apps]
+#      override:
+#        packages:
+#          all:
+#            prefer:
+#            - target=x86_64_v2
+
+    - group: apps-x86_64_v3
+      needs: [compiler]
+      specs: [$apps]
+      override:
+        packages:
+          all:
+            prefer:
+            - target=x86_64_v3
+    
+#    - group: apps-x86_64_v4
+#      needs: [compiler]
+#      specs: [$apps]
+#      override:
+#        packages:
+#          all:
+#            prefer:
+#            - target=x86_64_v4
+
+  view: false
+  concretizer:
+    unify: true
+    reuse: false
+
+  config:
+    install_tree:
+      root: /opt/spack
+      padded_length: 128
+  
+  mirrors:
+    numpex-buildcache:
+      url: oci://ghcr.io/numpex/spack-stack
+      binary: true
+      signed: false
+      access_pair:
+        id_variable: GITHUB_USER
+        secret_variable: GITHUB_TOKEN
+
+
