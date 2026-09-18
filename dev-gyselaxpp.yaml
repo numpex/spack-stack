@@ -6,7 +6,7 @@ spack:
   config:
     sandbox:
       enable: true
-      allow_network: false
+      allow_network: true
       allow_read:
         - /
       allow_write:
