@@ -69,13 +69,16 @@ spack:
     - 'pdiplugin-mpi@1.11'
     - 'pdiplugin-pycall@1.11'
     - 'py-dask@2026.3 +distributed'
+    - 'py-gysmc'
     - 'py-h5py@3.16'
     - 'py-imageio@2.37'
     - 'py-matplotlib@3.11 ^freetype@2.14.1'
+    - 'py-netcdf4@1.7'
     - 'py-numexpr@2.14'
     - 'py-numpy@2.4'
+    - 'py-psutil@7.2'
     - 'py-pyyaml@6.0'
-    - 'py-xarray@2026.4 +io'
+    - 'py-xarray@2026.4 +io +parallel'
   view:
     default:
       projections:
