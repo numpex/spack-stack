@@ -1,0 +1,60 @@
+---
+spack:
+  concretizer:
+    reuse: false
+    unify: true
+  config:
+    sandbox:
+      enable: true
+      allow_network: true
+      allow_read:
+        - /
+      allow_write:
+        - /home/runner
+  mirrors:
+    local-buildcache:
+      url: oci://ghcr.io/tpadioleau/dev-spack-ubuntu-26.04
+      binary: true
+      source: false
+      signed: false
+      access_pair:
+        id_variable: GITHUB_USER
+        secret_variable: GITHUB_TOKEN
+  packages:
+    all:
+      require:
+        - 'target=x86_64'
+      prefer:
+        - '~cuda'
+        - '~rocm'
+        - '~openmp'
+        - '~mpi'
+        - '~fortran'
+    c:
+      require: 'gcc@15.2'
+    cxx:
+      require: 'gcc@15.2'
+    fortran:
+      require: 'gcc@15.2'
+    py-dask:
+      prefer:
+        - '~dataframe'
+    py-pandas:
+      prefer: 
+        - '~performance'
+  repos:
+    patches:
+      git: https://github.com/gyselax/spack.git
+      branch: releases/v2026.06
+    builtin:
+      branch: releases/v2026.06
+  specs:
+    - 'gcc@15.2'
+    - 'cmake@4.3'
+    - 'gyselalibxx@0.8'
+    - 'ninja@1.13'
+  view:
+    default:
+      projections:
+        all: "{name}-{version}-{hash}"
+      root: .spack-env/view
