@@ -10,8 +10,8 @@ spack:
       allow_read:
         - /
   mirrors:
-    local-buildcache:
-      url: oci://ghcr.io/tpadioleau/dev-spack-ubuntu-24.04
+    spack-stack:
+      url: oci://ghcr.io/numpex/spack-stack
       binary: true
       source: false
       signed: false

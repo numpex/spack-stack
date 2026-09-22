@@ -49,7 +49,5 @@ jobs:
         env:
           GITHUB_USER: ${{ github.actor }}
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-        run: spack -e ${{matrix.stack}} buildcache push --j $(($(nproc) + 1)) --base-image ubuntu:22.04 --update-index numpex-buildcache
+        run: spack -e ${{matrix.stack}} buildcache push --j $(($(nproc) + 1)) --base-image ubuntu:22.04 --update-index spack-stack
         if: ${{ !cancelled() }}
-
-
