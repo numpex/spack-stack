@@ -53,11 +53,11 @@ jobs:
         shell: spack-bash {0}
         run: |
           spack --env . concretize
-          spack --env . install --fail-fast --include-build-deps --show-log-on-error
+          spack --env . install --j $(($(nproc) + 1)) --fail-fast --include-build-deps --show-log-on-error
       - name: Push packages and update index
         shell: spack-bash {0}
         env:
           GITHUB_USER: ${{github.actor}}
           GITHUB_TOKEN: ${{secrets.GITHUB_TOKEN}}
-        run: spack --env . buildcache push --fail-fast --base-image ubuntu:24.04 --update-index spack-stack
+        run: spack --env . buildcache push --j $(($(nproc) + 1)) --fail-fast --base-image ubuntu:24.04 --update-index spack-stack
         if: ${{!cancelled()}}
