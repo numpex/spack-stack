@@ -29,11 +29,11 @@ spack:
         - '~mpi'
         - '~fortran'
     c:
-      require: 'gcc@15.2'
+      require: 'gcc@14.3'
     cxx:
-      require: 'gcc@15.2'
+      require: 'gcc@14.3'
     fortran:
-      require: 'gcc@15.2'
+      require: 'gcc@14.3'
     py-dask:
       prefer:
         - '~dataframe'
@@ -47,10 +47,15 @@ spack:
     builtin:
       branch: releases/v2026.06
   specs:
-    - 'gcc@15.2'
-    - 'cmake@4.3'
-    - 'gyselalibxx@0.8'
-    - 'ninja@1.13'
+    - group: compiler
+      specs:
+        - 'gcc@14.3'
+    - group: app
+      needs: [compiler]
+      specs:
+        - 'cmake@4.3'
+        - 'gyselalibxx@0.8'
+        - 'ninja@1.13'
   view:
     default:
       projections:

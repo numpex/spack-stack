@@ -29,11 +29,11 @@ spack:
         - '~mpi'
         - '~fortran'
     c:
-      require: 'gcc@15.2'
+      require: 'gcc@14.3'
     cxx:
-      require: 'gcc@15.2'
+      require: 'gcc@14.3'
     fortran:
-      require: 'gcc@15.2'
+      require: 'gcc@14.3'
     py-dask:
       prefer:
         - '~dataframe'
@@ -47,25 +47,30 @@ spack:
     builtin:
       branch: releases/v2026.06
   specs:
-    - 'gcc@15.2'
-    - 'cmake@4.3'
-    - 'gyselalibxx@0.8'
-    - 'ninja@1.13'
-    - 'pdiplugin-decl-hdf5@1.11 +mpi'
-    - 'pdiplugin-decl-netcdf@1.11 +mpi'
-    - 'pdiplugin-mpi@1.11'
-    - 'pdiplugin-pycall@1.11'
-    - 'py-dask@2026.3 +distributed'
-    - 'py-gysmc'
-    - 'py-h5py@3.16'
-    - 'py-imageio@2.37'
-    - 'py-matplotlib@3.11 ^freetype@2.14.1'
-    - 'py-netcdf4@1.7'
-    - 'py-numexpr@2.14'
-    - 'py-numpy@2.4'
-    - 'py-psutil@7.2'
-    - 'py-pyyaml@6.0'
-    - 'py-xarray@2026.4 +io +parallel'
+    - group: compiler
+      specs:
+        - 'gcc@14.3'
+    - group: app
+      needs: [compiler]
+      specs:
+        - 'cmake@4.3'
+        - 'gyselalibxx@0.8'
+        - 'ninja@1.13'
+        - 'pdiplugin-decl-hdf5@1.11 +mpi'
+        - 'pdiplugin-decl-netcdf@1.11 +mpi'
+        - 'pdiplugin-mpi@1.11'
+        - 'pdiplugin-pycall@1.11'
+        - 'py-dask@2026.3 +distributed'
+        - 'py-gysmc'
+        - 'py-h5py@3.16'
+        - 'py-imageio@2.37'
+        - 'py-matplotlib@3.11 ^freetype@2.14.1'
+        - 'py-netcdf4@1.7'
+        - 'py-numexpr@2.14'
+        - 'py-numpy@2.4'
+        - 'py-psutil@7.2'
+        - 'py-pyyaml@6.0'
+        - 'py-xarray@2026.4 +io +parallel'
   view:
     default:
       projections:

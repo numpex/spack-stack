@@ -27,22 +27,27 @@ spack:
         - '~mpi'
         - '~fortran'
     c:
-      require: 'gcc@15.2'
+      require: 'gcc@14.3'
     cxx:
-      require: 'gcc@15.2'
+      require: 'gcc@14.3'
     fortran:
-      require: 'gcc@15.2'
+      require: 'gcc@14.3'
   repos:
     builtin:
       branch: releases/v2026.06
   specs:
-    - 'gcc@15.2'
-    - 'benchmark@1.9 ~performance_counters'
-    - 'cmake@4.3'
-    - 'googletest@1.17 +gmock'
-    - 'kokkos@5.1'
-    - 'ninja@1.13'
-    - 'py-gcovr@8.6'
+    - group: compiler
+      specs:
+        - 'gcc@14.3'
+    - group: app
+      needs: [compiler]
+      specs:
+        - 'benchmark@1.9 ~performance_counters'
+        - 'cmake@4.3'
+        - 'googletest@1.17 +gmock'
+        - 'kokkos@5.1'
+        - 'ninja@1.13'
+        - 'py-gcovr@8.6'
   view:
     default:
       projections:
