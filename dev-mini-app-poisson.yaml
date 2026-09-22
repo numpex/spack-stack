@@ -13,7 +13,7 @@ spack:
         - /home/runner
   mirrors:
     local-buildcache:
-      url: oci://ghcr.io/tpadioleau/dev-spack-ubuntu-26.04
+      url: oci://ghcr.io/tpadioleau/dev-spack-ubuntu-24.04
       binary: true
       source: false
       signed: false
