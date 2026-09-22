@@ -1,0 +1,51 @@
+---
+spack:
+  concretizer:
+    reuse: false
+    unify: true
+  config:
+    sandbox:
+      enable: true
+      allow_network: false
+      allow_read:
+        - /
+  mirrors:
+    local-buildcache:
+      url: oci://ghcr.io/tpadioleau/dev-spack-ubuntu-24.04
+      binary: true
+      source: false
+      signed: false
+      access_pair:
+        id_variable: GITHUB_USER
+        secret_variable: GITHUB_TOKEN
+  packages:
+    all:
+      prefer:
+        - '~cuda'
+        - '~rocm'
+        - '~openmp'
+        - '~mpi'
+        - '~fortran'
+    c:
+      require: 'gcc@14.3'
+    cxx:
+      require: 'gcc@14.3'
+    fortran:
+      require: 'gcc@14.3'
+  repos:
+    builtin:
+      branch: releases/v2026.06
+  specs:
+    - group: compiler
+      specs:
+        - 'gcc@14.3'
+    - group: app
+      needs: [compiler]
+      specs:
+        - 'cmake@4.3'
+        - 'googletest@1.17 +gmock'
+  view:
+    default:
+      projections:
+        all: "{name}-{version}-{hash}"
+      root: .spack-env/view
