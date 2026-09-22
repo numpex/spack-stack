@@ -20,8 +20,6 @@ spack:
         secret_variable: GITHUB_TOKEN
   packages:
     all:
-      require:
-        - 'target=x86_64'
       prefer:
         - '~cuda'
         - '~rocm'

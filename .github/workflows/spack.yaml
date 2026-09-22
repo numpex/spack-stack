@@ -28,6 +28,7 @@ jobs:
           - dev-mini-app-io.yaml
           - dev-mini-app-poisson.yaml
         os: [ubuntu-26.04]
+        target: [x86_64, x86_64_v3, x86_64_v4]
     runs-on: ${{matrix.os}}
     permissions:
       packages: write  # Required to push to registry
@@ -44,6 +45,7 @@ jobs:
         run: |
           spack bootstrap now
           spack env create . ${{matrix.env}}
+          spack --env . config add "packages:all:require:[target=${{matrix.target}}]"
           spack --env . config add config:install_tree:padded_length:128
           spack --env . repo update
           spack --env . buildcache list
