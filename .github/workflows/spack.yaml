@@ -28,7 +28,7 @@ jobs:
           - dev-mini-app-io.yaml
           - dev-mini-app-poisson.yaml
         os: [ubuntu-24.04]
-        target: [x86_64, x86_64_v3, x86_64_v4]
+        target: [x86_64, x86_64_v3]  # x86_64_v4 not supported on GitHub runners
     runs-on: ${{matrix.os}}
     permissions:
       packages: write  # Required to push to registry
