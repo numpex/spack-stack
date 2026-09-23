@@ -17,6 +17,7 @@ jobs:
       fail-fast: false
       matrix:
         env:
+          - deisa.yaml
           - dev-benchmark-euler-kernels.yaml
           - dev-ddc.yaml
           - dev-gmgpolar.yaml

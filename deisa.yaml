@@ -1,0 +1,63 @@
+---
+spack:
+  concretizer:
+    reuse: false
+    unify: true
+  config:
+    sandbox:
+      enable: true
+      allow_network: false
+      allow_read:
+        - /
+  mirrors:
+    spack-stack:
+      url: oci://ghcr.io/numpex/spack-stack
+      binary: true
+      source: false
+      signed: false
+      access_pair:
+        id_variable: GITHUB_USER
+        secret_variable: GITHUB_TOKEN
+  packages:
+    all:
+      prefer:
+        - '~cuda'
+        - '~rocm'
+        - '~openmp'
+        - '~mpi'
+        - '~fortran'
+    gcc:
+      externals:
+      - spec: gcc@14.2.0 languages:='c,c++,fortran'
+        prefix: /usr
+        extra_attributes:
+          compilers:
+            c: /usr/bin/gcc
+            cxx: /usr/bin/g++
+            fortran: /usr/bin/gfortran
+  repos:
+    builtin:
+      branch: releases/v2026.06
+  specs:
+    - group: compiler
+      specs:
+        - 'gcc@14.3'
+    - group: app
+      needs: [compiler]
+      specs:
+      - cmake
+      - openmpi
+      - python@3.10
+      - pdi +python ~fortran
+      - pdiplugin-decl-hdf5
+      - pdiplugin-mpi
+      - pdiplugin-pycall
+      - pdiplugin-user-code
+      - pdiplugin-set-value
+      - pdiplugin-trace
+      - py-deisa-dask
+  view:
+    default:
+      projections:
+        all: "{name}-{version}-{hash}"
+      root: .spack-env/view
