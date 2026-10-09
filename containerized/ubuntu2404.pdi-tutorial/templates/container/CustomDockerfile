@@ -1,0 +1,66 @@
+# https://github.com/spack/spack/tree/develop/share/spack/templates/container
+
+{% extends "container/Dockerfile" %}
+{% block build_stage %}
+
+# Spack's base image relies on the docker-shell wrapper to source setup-env.sh
+# before each RUN, which is required for commands like `spack env activate`.
+# This is a Docker-format directive, so this image must be built with
+# `podman build --format docker ...` (or with Docker).
+SHELL ["docker-shell"]
+
+COPY custom_packages /root/custom_packages/
+
+RUN ls ~/custom_packages/spack_repo/tbouvier/patches
+
+RUN spack repo add ~/custom_packages/spack_repo/tbouvier/patches && \
+    spack repo list
+
+{{ super() }}
+
+# Clone tutorial
+RUN git clone -b tutorial_HPCAsia https://github.com/pdidev/tutorial.git /root/tutorial
+
+{% endblock %}
+
+
+{% block final_stage %}
+
+COPY --from=builder /root/tutorial /opt/tutorial
+
+{{ super() }}
+
+# The runtime image is bare ubuntu:noble; install glibc's development files so
+# that Spack's gcc can link C/C++ programs (it needs crt1.o, crti.o, headers,
+# etc. from libc-dev). Also install make so the tutorial's CMake-generated
+# Makefiles can be driven; cmake itself comes from the Spack view.
+RUN apt-get update \
+    && apt-get install -y --no-install-recommends libc6-dev \
+    && rm -rf /var/lib/apt/lists/*
+
+# Sanity check script (runs at every container start, after Spack activation).
+COPY environment_check_script.sh /opt/environment_check_script.sh
+
+# Custom entrypoint that remaps the `pdi` user to the caller's UID/GID at run
+# time (via $HOST_UID / $HOST_GID), so bind-mounted host volumes keep correct
+# ownership on both sides. Overwrites the entrypoint produced by the parent
+# template (which only sourced the Spack activation script).
+COPY entrypoint.sh /entrypoint.sh
+
+# pdi user/group created with placeholder UID/GID 1001. The entrypoint remaps
+# them to $HOST_UID / $HOST_GID at run time.
+ENV SERVICE_NAME="pdi"
+
+RUN chmod +x /opt/environment_check_script.sh /entrypoint.sh \
+    && groupadd --gid 1001 $SERVICE_NAME \
+    && useradd -u 1001 -g $SERVICE_NAME --shell /bin/bash --no-create-home --home-dir /opt/$SERVICE_NAME $SERVICE_NAME \
+    && mkdir -p /opt/$SERVICE_NAME /var/log/$SERVICE_NAME \
+    && chown -R $SERVICE_NAME:$SERVICE_NAME /opt/$SERVICE_NAME /var/log/$SERVICE_NAME /opt/environment_check_script.sh /opt/tutorial
+
+# Intentionally NO `USER` directive: the entrypoint must start as root so it
+# can call usermod/groupmod, then drops privileges to $SERVICE_NAME via setpriv
+# before exec'ing the CMD.
+
+WORKDIR /opt/tutorial
+
+{% endblock %}

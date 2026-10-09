@@ -1,0 +1,46 @@
+# This is a Spack Environment file.
+#
+# It describes a set of packages to be installed, along with
+# configuration settings.
+spack:
+  view: ~/spack-view/mdls/mandelbrot/rtx6000.ai-inference
+  concretizer:
+    unify: true
+  # add package specs to the `specs` list
+  specs:
+  - group: compiler
+    specs:
+    - gcc@14.3
+  - group: app
+    needs: [compiler]
+    specs:
+    - py-vllm@0.28 +cuda cuda_arch=120 %gcc@14.3
+    - cuda@12
+  repos:
+    builtin:
+      destination: ${HOME}/git/spack-packages
+      git: https://github.com/thomas-bouvier/spack-packages
+      branch: feat/add-py-vllm
+  config:
+    install_tree:
+      padded_length: 256
+      root: /local/home/${USER}/spack-opt
+    build_stage:
+    - /rtx/${USER}/spack-stage
+  mirrors:
+    numpex-spack-mirror:
+      url: oci://ghcr.io/thomas-bouvier/numpex-spack-mirror
+      autopush: false
+      access_pair:
+        id_variable: OCI_USERNAME_VARIABLE
+        secret_variable: OCI_PASSWORD_VARIABLE
+  packages:
+    gcc:
+      externals:
+      - spec: gcc@11.5.0 languages:='c,c++,fortran'
+        prefix: /usr
+        extra_attributes:
+          compilers:
+            c: /usr/bin/gcc
+            cxx: /usr/bin/g++
+            fortran: /usr/bin/gfortran

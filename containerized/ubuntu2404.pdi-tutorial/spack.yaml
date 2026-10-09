@@ -1,0 +1,64 @@
+# This is a Spack Environment file.
+#
+# It describes a set of packages to be installed, along with
+# configuration settings.
+spack:
+  concretizer:
+    unify: true
+  # add package specs to the `specs` list
+  specs:
+  - group: compiler
+    specs:
+    - gcc@15.3
+  - group: app
+    needs: [compiler]
+    specs:
+    - cmake
+    - kokkos
+    - python@3.13 +tkinter
+    - pdi~fortran
+    - pdiplugin-decl-hdf5
+    - pdiplugin-mpi
+    - pdiplugin-pycall
+    - pdiplugin-trace
+    - pdiplugin-user-code
+    - pdiplugin-set-value
+    - py-ray
+    - py-deisa ^py-dask ~dataframe
+    - py-pandas ~performance
+    - py-distributed
+    - py-bokeh
+    - py-matplotlib
+    - py-mpi4py
+    - py-pip
+    - py-pytest
+    - git
+    - gdb
+    - vim
+    - nano
+    - gcc@15.3
+    - gmake
+  config:
+    template_dirs:
+    - templates
+  container:
+    # docker | singularity
+    format: docker
+    images:
+      build: docker.io/spack/ubuntu-noble:1.2
+      final: docker.io/ubuntu:noble
+    template: container/CustomDockerfile
+    # The strip step runs plain `strip` on static archives matched as
+    # `x-archive`, which removes the `ar` symbol index. Linking against any
+    # affected library (e.g. libgcc.a in the runtime image) then fails with
+    # `archive has no index; run ranlib to add one`.
+    strip: false
+  repos:
+    builtin:
+      branch: releases/v2026.06
+  mirrors:
+    numpex-spack-mirror:
+      url: oci://ghcr.io/thomas-bouvier/numpex-spack-mirror
+      access_pair:
+        id_variable: OCI_USERNAME_VARIABLE
+        secret_variable: OCI_PASSWORD_VARIABLE

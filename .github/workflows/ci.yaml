@@ -17,17 +17,17 @@ jobs:
       fail-fast: false
       matrix:
         env:
-          - deisa.yaml
-          - dev-benchmark-euler-kernels.yaml
-          - dev-ddc.yaml
-          - dev-gmgpolar.yaml
-          - dev-gyselalibxx.yaml
-          - dev-gyselaxpp.yaml
-          - dev-heraclespp.yaml
-          - dev-kokkos.yaml
-          - dev-kokkos-fft.yaml
-          - dev-mini-app-io.yaml
-          - dev-mini-app-poisson.yaml
+          - generic/deisa.yaml
+          - generic/dev-benchmark-euler-kernels.yaml
+          - generic/dev-ddc.yaml
+          - generic/dev-gmgpolar.yaml
+          - generic/dev-gyselalibxx.yaml
+          - generic/dev-gyselaxpp.yaml
+          - generic/dev-heraclespp.yaml
+          - generic/dev-kokkos.yaml
+          - generic/dev-kokkos-fft.yaml
+          - generic/dev-mini-app-io.yaml
+          - generic/dev-mini-app-poisson.yaml
         os: [ubuntu-24.04]
         target: [x86_64, x86_64_v3]  # x86_64_v4 not supported on GitHub runners
     runs-on: ${{matrix.os}}

@@ -1,0 +1,48 @@
+# https://github.com/spack/spack/tree/develop/share/spack/templates/container
+
+{% extends "container/singularity.def" %}
+{% block build_stage %}
+
+# A %post instruction will appear just above
+
+# This section is executed before concatenated %post sections
+%files
+  custom_packages /root/
+
+%post
+
+  ls ~/custom_packages/spack_repo/tbouvier/patches
+
+  . /opt/spack/share/spack/setup-env.sh
+  spack repo add ~/custom_packages/spack_repo/tbouvier/patches
+  spack repo list
+
+{{ super() }}
+
+  # Clone tutorial
+  git clone -b tutorial_HPCAsia https://github.com/pdidev/tutorial.git /root/tutorial
+
+{% endblock %}
+
+
+{% block final_stage %}
+
+%files from build
+  /root/tutorial /opt/tutorial
+
+%files
+  environment_check_script.sh /opt/environment_check_script.sh
+
+%post
+
+{{ super() }}
+
+  # Validation script
+  chmod +x /opt/environment_check_script.sh
+
+%runscript
+  cd /opt/tutorial
+  /opt/environment_check_script.sh
+  exec "$@"
+
+{% endblock %}
