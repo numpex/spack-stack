@@ -73,7 +73,7 @@ spack:
         - 'pdiplugin-decl-hdf5@1.11 +mpi'
         - 'pdiplugin-decl-netcdf@1.11 +mpi'
         - 'pdiplugin-mpi@1.11'
-        - 'pdiplugin-set-value@1.11'Q
+        - 'pdiplugin-set-value@1.11'
         - 'pdiplugin-trace@1.11'
         - 'pdiplugin-pycall@1.11'
         - 'py-dask@2026.3 +distributed'
