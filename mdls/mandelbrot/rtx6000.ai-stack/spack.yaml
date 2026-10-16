@@ -3,7 +3,7 @@
 # It describes a set of packages to be installed, along with
 # configuration settings.
 spack:
-  view: ~/spack-view/mdls/mandelbrot/rtx6000.ai-inference
+  view: ~/spack-view/mdls/mandelbrot/rtx6000.ai-stack
   concretizer:
     unify: true
   # add package specs to the `specs` list
@@ -14,7 +14,7 @@ spack:
   - group: app
     needs: [compiler]
     specs:
-    - py-vllm +cuda cuda_arch=120 %gcc@14.3
+    - py-torch +cuda cuda_arch=120 %gcc@14.3
     - cuda@12
     - gloo@2025-12-02
     - py-stable-baselines3 +vector +sdl +xla
@@ -36,7 +36,7 @@ spack:
     - /rtx/${USER}/spack-stage
   mirrors:
     numpex-spack-mirror:
-      url: oci://ghcr.io/thomas-bouvier/numpex-spack-mirror
+      url: oci://ghcr.io/numpex/numpex-spack-mirror
       autopush: false
       access_pair:
         id_variable: OCI_USERNAME_VARIABLE
