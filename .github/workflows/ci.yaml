@@ -20,14 +20,9 @@ jobs:
           - generic/ai-stack/spack.yaml
           - generic/gysela/spack.yaml
           - generic/deisa/deisa.yaml
-          - generic/kokkos/dev-benchmark-euler-kernels.yaml
-          - generic/kokkos/dev-ddc.yaml
-          - generic/kokkos/dev-gmgpolar.yaml
-          - generic/kokkos/dev-heraclespp.yaml
-          - generic/kokkos/dev-kokkos.yaml
-          - generic/kokkos/dev-kokkos-fft.yaml
-          - generic/mini-app-io/dev-mini-app-io.yaml
-          - generic/mini-app-poisson/dev-mini-app-poisson.yaml
+          - generic/kokkos/spack.yaml
+          - generic/mini-app-io/spack.yaml
+          - generic/mini-app-poisson/spack.yaml
         os: [ubuntu-24.04]
         target: [x86_64, x86_64_v3]  # x86_64_v4 not supported on GitHub runners
     runs-on: ${{matrix.os}}

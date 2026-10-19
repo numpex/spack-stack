@@ -9,6 +9,8 @@ spack:
       allow_network: false
       allow_read:
         - /
+      allow_write:
+        - /home/runner
   mirrors:
     spack-stack:
       url: oci://ghcr.io/numpex/spack-stack
@@ -48,20 +50,31 @@ spack:
         - 'benchmark@1.9 ~performance_counters'
         - 'cmake@4.3'
         - 'doxygen@1.17'
+        - 'fftw@3.3 precision=float,double'
         - 'ginkgo@1.11'
         - 'googletest@1.17 +gmock'
+        - 'hdf5@1.14 +mpi'
         - 'kokkos@5.1'
+        - 'kokkos-tools@git.3d33d0a783c5321d6981b3b4e43d3c157d2ca887=develop'
         - 'kokkos-fft@1.1 host_backend=fftw-serial'
         - 'kokkos-kernels@5.1'
         - 'ninja@1.13'
         - 'openblas@0.3'
+        - 'openmpi@5.0'
         - 'paraconf@1.0'
         - 'pdi@1.11'
-        - 'pdiplugin-decl-hdf5@1.11'
-        - 'pdiplugin-user-code@1.11'
+        - 'pdiplugin-decl-hdf5@1.11 +mpi'
+        - 'pdiplugin-mpi@1.11'
+        - 'pdiplugin-set-value@1.11'
         - 'pdiplugin-trace@1.11'
+        - 'pdiplugin-user-code@1.11'
         - 'py-gcovr@8.6'
         - 'py-numpy@2.4'
+        - 'py-h5py@3.16'
+        - 'py-matplotlib@3.11 ^freetype@2.14.1'
+        - 'py-numpy@2.4'
+        - 'py-pyyaml@6.0'
+        - 'py-scipy'
         - 'py-pytest@9.0'
   view:
     default:
