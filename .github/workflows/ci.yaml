@@ -17,6 +17,7 @@ jobs:
       fail-fast: false
       matrix:
         env:
+          - generic/ai-stack/spack.yaml
           - generic/gysela/spack.yaml
           - generic/deisa/deisa.yaml
           - generic/kokkos/dev-benchmark-euler-kernels.yaml
