@@ -19,7 +19,7 @@ jobs:
         env:
           - generic/ai-stack/spack.yaml
           - generic/gysela/spack.yaml
-          - generic/deisa/deisa.yaml
+          - generic/deisa/spack.yaml
           - generic/kokkos/spack.yaml
           - generic/mini-app-io/spack.yaml
           - generic/mini-app-poisson/spack.yaml
