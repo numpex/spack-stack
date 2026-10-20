@@ -1,0 +1,26 @@
+spack:
+  include:
+    - path: site/externals.yaml
+      optional: true
+    - path: site
+      optional: true
+  specs:
+    - cxx
+    - cmake
+    - mpi
+    - python@3.10
+    - pdi +python ~fortran
+    - pdiplugin-decl-hdf5
+    - pdiplugin-decl-netcdf
+    - pdiplugin-mpi
+    - pdiplugin-pycall
+    - pdiplugin-set-value
+    - pdiplugin-trace
+    - pdiplugin-user-code
+    - py-deisa-dask
+    - py-matplotlib
+    - py-numpy
+    - py-pyyaml
+  concretizer:
+    reuse: false
+    unify: true
