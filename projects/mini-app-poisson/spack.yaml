@@ -1,0 +1,14 @@
+spack:
+  include:
+    - path: site/externals.yaml
+      optional: true
+    - path: site
+      optional: true
+  specs:
+    - cxx
+    - cmake@4.3
+    - gyselalibxx@0.8
+    - ninja@1.13
+  concretizer:
+    reuse: false
+    unify: true
