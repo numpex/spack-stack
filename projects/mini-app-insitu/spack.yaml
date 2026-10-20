@@ -1,0 +1,58 @@
+spack:
+  include:
+    - path: gysela/externals.yaml
+      optional: true
+    - path: gysela
+      optional: true
+  specs:
+    - cxx
+    - cmake@3.31
+    - ddc +pdi
+    - gyselalibxx@0.8
+    - mpi
+    - paraconf@1.0
+    - pdi@1.11
+
+    - py-dask
+    - py-dask-ml@2025.1
+    - py-deisa-dask@0.6 +mpi
+    - py-deisa-ray
+    - py-equinox@0.13
+    - py-h5netcdf
+    - py-h5py +mpi
+    - py-imageio
+    - py-iops-benchmark +bayesian
+    - py-jax@0.4
+    - py-matplotlib
+    - py-numpy
+    - py-netcdf4 +mpi
+    - py-optax@0.2
+    - py-pyyaml
+    - py-scikit-learn
+    - py-scimba
+    - py-scipy
+    - py-sympy
+    - py-tqdm
+    - py-xarray
+  concretizer:
+    reuse: false
+    unify: true
+  packages:
+    arrow:
+      prefer:
+        - '~mimalloc'
+    hdf5:
+      require: '+subfiling'
+    py-dask:
+      prefer:
+        - '~dataframe'
+    py-h5py:
+      require: '+mpi'
+    py-pandas:
+      prefer:
+        - '~performance'
+    py-torch:
+      prefer:
+        - '~valgrind'
+    npm:
+      require: '@10.9.8'
