@@ -6,7 +6,7 @@ Spack environments for the software stacks of [NumPEx](https://numpex.org)
 applications together with
 everything needed to install them on HPC platforms:
 
-- **ready-to-use Spack environments** for each software stack (`generic/`, `projects/`);
+- **ready-to-use Spack environments** for each software stack (`projects/`);
 - **a unified installer**, [`install.sh`](install.sh), which builds a stack on a supported
   HPC platform, combining the stack definition with site-specific configuration
   (externals, compilers, package repositories);
@@ -54,7 +54,7 @@ completion the installation tree is shared with the site group.
 |------|---------|--------------|
 | CINES | Adastra | `genoa` (CPU), `mi250`, `mi300` (AMD GPU) |
 | IDRIS | Jean-Zay | `h100` (NVIDIA GPU, Slurm mode) |
-| MDLS | Mandelbrot | site configuration only |
+| MDLS | Mandelbrot | `rtx6000` (NVIDIA GPU) |
 
-Each architecture also ships a `toolchain.cmake` with the recommended compiler settings,
-reusable downstream with `cmake -C <toolchain.cmake>`.
+The Adastra and Jean-Zay architectures also ship a `toolchain.cmake` with the recommended
+compiler settings, reusable downstream with `cmake -C <toolchain.cmake>`.
