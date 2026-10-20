@@ -1,0 +1,39 @@
+spack:
+  include:
+    - path: site/externals.yaml
+      optional: true
+    - path: site
+      optional: true
+  specs:
+    - cxx
+    - benchmark@1.9 ~performance_counters
+    - cmake@4.3
+    - doxygen@1.17
+    - fftw@3.3 precision=float,double
+    - ginkgo@1.11
+    - googletest@1.17 +gmock
+    - hdf5@1.14 +mpi
+    - kokkos@5.1
+    - kokkos-fft@1.1 host_backend=fftw-serial
+    - kokkos-kernels@5.1
+    - kokkos-tools@git.3d33d0a783c5321d6981b3b4e43d3c157d2ca887=develop
+    - lapack
+    - mpi
+    - ninja@1.13
+    - paraconf@1.0
+    - pdi@1.11
+    - pdiplugin-decl-hdf5@1.11 +mpi
+    - pdiplugin-mpi@1.11
+    - pdiplugin-set-value@1.11
+    - pdiplugin-trace@1.11
+    - pdiplugin-user-code@1.11
+    - py-gcovr@8.6
+    - py-h5py@3.16
+    - py-matplotlib@3.11
+    - py-numpy@2.4
+    - py-pytest@9.0
+    - py-pyyaml@6.0
+    - py-scipy
+  concretizer:
+    reuse: false
+    unify: true
