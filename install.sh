@@ -200,7 +200,8 @@ step_install() {
 fix_permissions() {
     [[ -d "${SPACK_PREFIX}" ]] || return 0
     info "Sharing ${SPACK_PREFIX} with group ${SPACK_GROUP}"
-    find "${SPACK_PREFIX}" -user "${USER}" \( -type d -o -type f \) \
+    # `USER` may be unset in non-interactive shells
+    find "${SPACK_PREFIX}" -user "$(id -un)" \( -type d -o -type f \) \
         -exec chgrp "${SPACK_GROUP}" {} + \
         -exec chmod g+rwX {} + || warn "could not fix all permissions"
 }
