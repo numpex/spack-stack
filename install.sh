@@ -1,14 +1,15 @@
 #!/bin/bash
 #
-# Unified installer for the Gysela toolchains.
+# Unified installer for the NumPEx software stacks.
 #
 #   ./install.sh --platform <site> --arch <arch> --project <project> [options]
 #
 # It combines
 #   projects/<project>/spack.yaml          (what to install)
-#   platforms/<site>/config.sh             (site variables, Spack location)
+#   platforms/<site>/config.sh            (site variables, Spack location)
 #   platforms/<site>/<arch>/spack/*.yaml   (externals, packages, repos)
-# into the Spack environment "<project>-<arch>--<version>" (version.txt).
+# into the Spack environment "<project>-<arch>--<version>" (version.txt),
+# with the site configuration assembled under <env>/site/.
 #
 # Steps (run in this order by default, `--step` runs only one):
 #   spack        clone Spack and bootstrap it                 (needs internet)
@@ -160,8 +161,8 @@ step_env() {
     local env_dir
     env_dir="$(spack location --env "${env_name}")"
     cp "${project_yaml}" "${env_dir}/spack.yaml"
-    mkdir --parents "${env_dir}/gysela"
-    cp -r "${conf_dir}"/. "${env_dir}/gysela/"
+    mkdir --parents "${env_dir}/site"
+    cp -r "${conf_dir}"/. "${env_dir}/site/"
 
     spack -e "${env_name}" repo update
 
