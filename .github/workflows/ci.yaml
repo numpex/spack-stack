@@ -17,12 +17,12 @@ jobs:
       fail-fast: false
       matrix:
         env:
-          - generic/ai-stack/spack.yaml
-          - generic/gysela/spack.yaml
-          - generic/deisa/spack.yaml
-          - generic/kokkos/spack.yaml
-          - generic/mini-app-io/spack.yaml
-          - generic/mini-app-poisson/spack.yaml
+          - projects/ai-stack/spack.yaml
+          - projects/deisa/spack.yaml
+          - projects/gysela/spack.yaml
+          - projects/kokkos/spack.yaml
+          - projects/mini-app-io/spack.yaml
+          - projects/mini-app-poisson/spack.yaml
         os: [ubuntu-24.04]
         target: [x86_64, x86_64_v3]  # x86_64_v4 not supported on GitHub runners
     runs-on: ${{matrix.os}}
@@ -38,15 +38,24 @@ jobs:
           buildcache: true
       - name: Prepare environment
         shell: spack-bash {0}
+        env:
+          GITHUB_USER: ${{github.actor}}
+          GITHUB_TOKEN: ${{secrets.GITHUB_TOKEN}}
         run: |
           spack bootstrap now
           spack env create . ${{matrix.env}}
+          # Assemble the runner "site" configuration, like install.sh does for platforms
+          mkdir site
+          cp .github/spack/*.yaml site/
           spack --env . config add "packages:all:require:[target=${{matrix.target}}]"
           spack --env . config add config:install_tree:padded_length:128
           spack --env . repo update
           spack --env . buildcache list
       - name: Install
         shell: spack-bash {0}
+        env:
+          GITHUB_USER: ${{github.actor}}
+          GITHUB_TOKEN: ${{secrets.GITHUB_TOKEN}}
         run: |
           spack --env . concretize
           spack --env . install --j $(($(nproc) + 1)) --fail-fast --include-build-deps --show-log-on-error
