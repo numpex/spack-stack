@@ -1,4 +1,4 @@
-# spack-stack
+# env-installer
 
 Spack binary cache for NumPEx applications.
 

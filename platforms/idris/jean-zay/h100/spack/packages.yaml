@@ -1,0 +1,24 @@
+---
+packages:
+  all:
+    permissions:
+      read: group
+      write: group
+    prefer:
+      - 'target=sapphirerapids'
+  c:
+    require: gcc@14.2.0
+  cxx:
+    require: gcc@14.2.0
+  ginkgo:
+    require: '~openmp +cuda cuda_arch=90'
+  kokkos:
+    require: '~openmp +cuda cuda_arch=90'
+  kokkos-fft:
+    require: 'host_backend=fftw-serial'
+  kokkos-kernels:
+    require: '~shared'
+  lapack:
+    require: openblas@0.3 ~dynamic_dispatch
+  mpi:
+    require: openmpi@4.1
