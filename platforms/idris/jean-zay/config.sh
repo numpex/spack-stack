@@ -14,7 +14,7 @@ export SPACK_GROUP="${IDRPROJ}"
 export SPACK_JOBS=128
 SPACK_VERSION="$(tr -d '[:space:]' < "$(dirname -- "$(readlink -f -- "${BASH_SOURCE[0]}")")/../../../spack-version.txt")"
 export SPACK_VERSION
-export SPACK_PREFIX=${ALL_CCFRSCRATCH}/gysela-spack-${SPACK_VERSION}
+export SPACK_PREFIX=${ALL_CCFRSCRATCH}/jean-zay-spack-${SPACK_VERSION}
 
 export PYTHONPYCACHEPREFIX="${ALL_CCFRSCRATCH}/pycache"
 export SPACK_DISABLE_LOCAL_CONFIG=true
