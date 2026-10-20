@@ -1,0 +1,22 @@
+---
+packages:
+  all:
+    permissions:
+      read: world
+      write: group
+    prefer:
+      - 'target=zen4'
+  c:
+    require: gcc@13.3.1
+  cxx:
+    require: gcc@13.3.1
+  ginkgo:
+    require: '+openmp'
+  kokkos:
+    require: '+openmp'
+  kokkos-fft:
+    require: 'host_backend=fftw-openmp'
+  mpi:
+    require: cray-mpich
+  lapack:
+    require: openblas

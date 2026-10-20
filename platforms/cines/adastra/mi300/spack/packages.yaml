@@ -1,0 +1,24 @@
+---
+packages:
+  all:
+    permissions:
+      read: world
+      write: group
+    prefer:
+      - 'target=zen3'
+  c:
+    require: gcc@13.3.1
+  cxx:
+    require: gcc@13.3.1
+  ginkgo:
+    require: '~openmp +rocm amdgpu_target=gfx942'
+  kokkos:
+    require: '~openmp +rocm ~apu amdgpu_target=gfx942'
+  kokkos-fft:
+    require: 'host_backend=fftw-serial'
+  kokkos-kernels:
+    require: '~shared'
+  mpi:
+    require: cray-mpich
+  lapack:
+    require: openblas
