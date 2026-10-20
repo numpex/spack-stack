@@ -45,12 +45,28 @@ list_dirs() {
     done | paste -sd' '
 }
 
+# List platforms: either platforms/<machine>/config.sh or the nested
+# platforms/<org>/<machine>/config.sh layout, as usable --platform values
+list_platforms() {
+    local org machine
+    for org in "$1"/*/; do
+        if [[ -f "${org}config.sh" ]]; then
+            printf '%s\n' "$(basename -- "${org}")"
+        else
+            for machine in "${org}"*/; do
+                [[ -f "${machine}config.sh" ]] && \
+                    printf '%s/%s\n' "$(basename -- "${org}")" "$(basename -- "${machine}")"
+            done
+        fi
+    done | paste -sd' '
+}
+
 usage() {
     cat <<EOF
 Usage: $(basename "$0") --platform <site> --arch <arch> --project <project> [options]
 
 Options:
-  --platform <site>        one of: $(list_dirs "${TOOLCHAIN_ROOT}/platforms" config.sh)
+  --platform <site>        one of: $(list_platforms "${TOOLCHAIN_ROOT}/platforms")
   --arch <arch>            a sub-directory of platforms/<site>/ (e.g. mi250, h100)
   --project <project>      one of: $(list_dirs "${TOOLCHAIN_ROOT}/projects" spack.yaml)
   --step <step>            all (default) | spack | env | concretize | mirror | install
@@ -90,10 +106,9 @@ platform_dir="${TOOLCHAIN_ROOT}/platforms/${platform}"
 conf_dir="${platform_dir}/${arch}/spack"
 project_yaml="${TOOLCHAIN_ROOT}/projects/${project}/spack.yaml"
 
-[[ -d "${platform_dir}" ]] || die "unknown platform '${platform}' (available: $(list_dirs "${TOOLCHAIN_ROOT}/platforms" config.sh))"
+[[ -f "${platform_dir}/config.sh" ]] || die "unknown platform '${platform}' (available: $(list_platforms "${TOOLCHAIN_ROOT}/platforms"))"
 [[ -d "${conf_dir}" ]] || die "unknown arch '${arch}' for ${platform} (available: $(list_dirs "${platform_dir}" spack/packages.yaml))"
 [[ -f "${project_yaml}" ]] || die "unknown project '${project}' (available: $(list_dirs "${TOOLCHAIN_ROOT}/projects" spack.yaml))"
-[[ -f "${platform_dir}/config.sh" ]] || die "missing ${platform_dir}/config.sh"
 for f in externals.yaml packages.yaml; do
     [[ -f "${conf_dir}/${f}" ]] || die "missing ${conf_dir}/${f}"
 done
