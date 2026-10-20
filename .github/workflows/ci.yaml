@@ -20,7 +20,9 @@ jobs:
           - projects/ai-stack/spack.yaml
           - projects/deisa/spack.yaml
           - projects/gysela/spack.yaml
+          - projects/gyselalibxx/spack.yaml
           - projects/kokkos/spack.yaml
+          - projects/mini-app-insitu/spack.yaml
           - projects/mini-app-io/spack.yaml
           - projects/mini-app-poisson/spack.yaml
         os: [ubuntu-24.04]
@@ -47,6 +49,8 @@ jobs:
           # Assemble the runner "site" configuration, like install.sh does for platforms
           mkdir site
           cp .github/spack/*.yaml site/
+          # Detect the system compiler: its version drifts with the runner image
+          spack --env . external find gcc
           spack --env . config add "packages:all:require:[target=${{matrix.target}}]"
           spack --env . config add config:install_tree:padded_length:128
           spack --env . repo update

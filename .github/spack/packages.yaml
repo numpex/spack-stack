@@ -1,9 +1,11 @@
 # Site configuration for the GitHub Actions runners (ubuntu-24.04), used by CI
 # to build the binary cache. Assembled into environments the same way
 # install.sh assembles platform configs, through the optional `site/` include.
+# The compiler itself is detected at runtime by `spack external find gcc` in
+# the workflow: the runner image may drift, so no version is pinned here.
 ---
 packages:
   c:
-    require: gcc@14.2.0
+    require: gcc
   cxx:
-    require: gcc@14.2.0
+    require: gcc
