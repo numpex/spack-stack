@@ -1,0 +1,50 @@
+spack:
+  include:
+    - path: site/externals.yaml
+      optional: true
+    - path: site
+      optional: true
+  specs:
+    - cxx
+    - cmake@4.3
+    - ddc@0.15 +fft +pdi +splines
+    - ginkgo@1.11
+    - gmgpolar@2.3
+    - googletest@1.17 +gmock
+    - kokkos@5.1
+    - kokkos-kernels@5.1
+    - kokkos-tools@git.3d33d0a783c5321d6981b3b4e43d3c157d2ca887=develop
+    - koliop@0.2
+    - lapack
+    - mpi
+    - ninja@1.13
+    - paraconf@1.0
+    - pdi@1.11
+    - pdiplugin-decl-hdf5@1.11 +mpi
+    - pdiplugin-decl-netcdf@1.11 +mpi
+    - pdiplugin-mpi@1.11
+    - pdiplugin-pycall@1.11
+    - pdiplugin-set-value@1.11
+    - pdiplugin-trace@1.11
+    - py-dask@2026.3 +distributed
+    - py-gysmc
+    - py-h5py@3.16
+    - py-imageio@2.37
+    - py-matplotlib@3.11
+    - py-netcdf4@1.7
+    - py-numexpr@2.14
+    - py-numpy@2.4
+    - py-psutil@7.2
+    - py-pyyaml@6.0
+    - py-scipy@1.17
+    - py-xarray@2026.4 +io +parallel
+  concretizer:
+    reuse: false
+    unify: true
+  packages:
+    py-dask:
+      prefer:
+        - '~dataframe'
+    py-pandas:
+      prefer:
+        - '~performance'
