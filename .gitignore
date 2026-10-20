@@ -1,2 +1,5 @@
 .spack-env
 spack.lock
+# Artifacts of `spack env create .` at the repository root (CI, local runs)
+/spack.yaml
+/site/
