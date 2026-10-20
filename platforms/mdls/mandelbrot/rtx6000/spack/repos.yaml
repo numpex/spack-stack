@@ -1,0 +1,8 @@
+---
+# The py-vllm recipes live in a spack-packages fork, used as the builtin
+# repository on this machine.
+repos:
+  builtin:
+    git: https://github.com/thomas-bouvier/spack-packages.git
+    branch: feat/add-py-vllm
+    destination: $spack/var/spack/repos/builtin-py-vllm

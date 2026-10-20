@@ -1,0 +1,16 @@
+---
+packages:
+  all:
+    permissions:
+      read: world
+      write: group
+  c:
+    require: gcc@11.5.0
+  cxx:
+    require: gcc@11.5.0
+  cuda:
+    require: '@12'
+  py-torch:
+    require: '+cuda cuda_arch=120'
+  py-vllm:
+    require: '+cuda cuda_arch=120'
