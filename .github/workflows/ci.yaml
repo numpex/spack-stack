@@ -17,6 +17,7 @@ jobs:
       fail-fast: false
       matrix:
         env:
+          - projects/ai-inference/spack.yaml
           - projects/ai-stack/spack.yaml
           - projects/deisa/spack.yaml
           - projects/gysela/spack.yaml
