@@ -18,21 +18,22 @@ everything needed to install them on HPC platforms:
 
 ## Install a stack on an HPC platform
 
-`install.sh` combines three inputs into a Spack environment named
+`install.sh` combines the following inputs into a Spack environment named
 `<project>-<arch>--<version>` (version from [`version.txt`](version.txt)):
 
 | Input | Option | Files | Content |
 |-------|--------|-------|---------|
-| Stack | — | `common/spack/*.yaml` | package repositories shared by all machines |
+| Stack | — | `common/*.yaml` | package repositories shared by all machines |
 | Platform | `--platform` | `platforms/<site>/config.sh` | Spack location, parallel jobs, Slurm settings |
 | Architecture | `--arch` | `platforms/<site>/<arch>/spack/*.yaml` | externals, package preferences, machine-specific repositories |
 | Project | `--project` | `projects/<project>/spack.yaml` | the software stack to install |
+| Project (optional) | — | `projects/<project>/spack/*.yaml` | project-specific repositories (e.g. `ai-inference` uses a `spack-packages` fork for `py-vllm`) |
 
-The machine-specific configuration is merged on top of the stack-level one:
-for instance, Adastra adds its `patches_adastra` sub-repository to the package
-repositories defined in `common/spack/repos.yaml` (the `gyselax` fork of Spack,
-with the GYSELA recipes, and the `builtin` repository pinned to the Spack
-release).
+Configuration is merged from the most specific layer to the most general one:
+project, then machine, then stack. For instance, Adastra adds its
+`patches_adastra` sub-repository to the package repositories defined in
+`common/repos.yaml` (the `gyselax` fork of Spack, with the GYSELA recipes, and
+the `builtin` repository pinned to the Spack release).
 
 Example on CINES Adastra:
 

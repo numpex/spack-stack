@@ -1,0 +1,9 @@
+---
+# Project-level recipes, merged over the machine and stack-level configs:
+# py-vllm is not in the upstream builtin repository, so use the spack-packages
+# fork providing it as the builtin repository.
+repos:
+  builtin:
+    git: https://github.com/thomas-bouvier/spack-packages.git
+    branch: feat/add-py-vllm
+    destination: $spack/var/spack/repos/builtin-py-vllm

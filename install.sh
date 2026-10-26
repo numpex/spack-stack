@@ -6,12 +6,14 @@
 #
 # It combines
 #   projects/<project>/spack.yaml          (what to install)
-#   common/spack/*.yaml                   (repos shared by all machines)
+#   projects/<project>/spack/*.yaml         (optional project-level config)
+#   common/*.yaml                          (repos shared by all machines)
 #   platforms/<site>/config.sh            (site variables, Spack location)
 #   platforms/<site>/<arch>/spack/*.yaml   (externals, packages, repos)
 # into the Spack environment "<project>-<arch>--<version>" (version.txt),
-# with the stack configuration assembled under <env>/common/ and the site
-# configuration under <env>/site/.
+# with the project configuration assembled under <env>/project/, the stack
+# configuration under <env>/common/ and the site configuration under
+# <env>/.
 #
 # Steps (run in this order by default, `--step` runs only one):
 #   spack        clone Spack and bootstrap it                 (needs internet)
@@ -107,6 +109,7 @@ esac
 platform_dir="${TOOLCHAIN_ROOT}/platforms/${platform}"
 conf_dir="${platform_dir}/${arch}/spack"
 project_yaml="${TOOLCHAIN_ROOT}/projects/${project}/spack.yaml"
+project_conf_dir="${TOOLCHAIN_ROOT}/projects/${project}/spack"
 
 [[ -f "${platform_dir}/config.sh" ]] || die "unknown platform '${platform}' (available: $(list_platforms "${TOOLCHAIN_ROOT}/platforms"))"
 [[ -d "${conf_dir}" ]] || die "unknown arch '${arch}' for ${platform} (available: $(list_dirs "${platform_dir}" spack/packages.yaml))"
@@ -115,7 +118,7 @@ for f in externals.yaml packages.yaml; do
     [[ -f "${conf_dir}/${f}" ]] || die "missing ${conf_dir}/${f}"
 done
 # Machine-specific repos.yaml is optional: the stack-level configuration in
-# common/spack/ already provides the package repositories shared by all machines.
+# common/ already provides the package repositories shared by all machines.
 
 # ------------------------------------------------------------- site config
 # Spack's setup-env.sh (sourced by config.sh) is not `set -u` clean.
@@ -180,9 +183,15 @@ step_env() {
     env_dir="$(spack location --env "${env_name}")"
     cp "${project_yaml}" "${env_dir}/spack.yaml"
     mkdir --parents "${env_dir}/common"
-    cp -r "${TOOLCHAIN_ROOT}/common/spack/". "${env_dir}/common/"
+    cp -r "${TOOLCHAIN_ROOT}/common/". "${env_dir}/common/"
     mkdir --parents "${env_dir}/site"
     cp -r "${conf_dir}"/. "${env_dir}/site/"
+    # Optional project-level configuration, e.g. package repositories needed
+    # by the specs of this project
+    if [[ -d "${project_conf_dir}" ]]; then
+        mkdir --parents "${env_dir}/project"
+        cp -r "${project_conf_dir}"/. "${env_dir}/project/"
+    fi
 
     spack -e "${env_name}" repo update
 
