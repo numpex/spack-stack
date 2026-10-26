@@ -1,12 +1,8 @@
 ---
+# Machine-specific recipes, merged over common/spack/repos.yaml: the gyselax
+# fork also provides a patched cray-mpich recipe on this Cray machine
+# (site-specific GPU transport layer setup).
 repos:
-  patches:
-    git: https://github.com/gyselax/spack.git
-    branch: releases/v2026.10
+  gyselax:
     paths:
       - spack_repo/patches_adastra
-      - spack_repo/patches_common
-    destination: $spack/var/spack/repos/patches-v2026.10
-  builtin:
-    branch: releases/v2026.10
-    destination: $spack/var/spack/repos/builtin-v2026.10

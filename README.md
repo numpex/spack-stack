@@ -23,9 +23,16 @@ everything needed to install them on HPC platforms:
 
 | Input | Option | Files | Content |
 |-------|--------|-------|---------|
+| Stack | — | `common/spack/*.yaml` | package repositories shared by all machines |
 | Platform | `--platform` | `platforms/<site>/config.sh` | Spack location, parallel jobs, Slurm settings |
-| Architecture | `--arch` | `platforms/<site>/<arch>/spack/*.yaml` | externals, package preferences, package repositories |
+| Architecture | `--arch` | `platforms/<site>/<arch>/spack/*.yaml` | externals, package preferences, machine-specific repositories |
 | Project | `--project` | `projects/<project>/spack.yaml` | the software stack to install |
+
+The machine-specific configuration is merged on top of the stack-level one:
+for instance, Adastra adds its `patches_adastra` sub-repository to the package
+repositories defined in `common/spack/repos.yaml` (the `gyselax` fork of Spack,
+with the GYSELA recipes, and the `builtin` repository pinned to the Spack
+release).
 
 Example on CINES Adastra:
 

@@ -47,9 +47,11 @@ jobs:
         run: |
           spack bootstrap now
           spack env create . ${{matrix.env}}
-          # Assemble the runner "site" configuration, like install.sh does for platforms
-          mkdir site
+          # Assemble the stack-level and runner "site" configuration, like
+          # install.sh does for platforms
+          mkdir site common
           cp .github/spack/*.yaml site/
+          cp common/spack/*.yaml common/
           # Detect the system compiler: its version drifts with the runner image
           spack --env . external find gcc
           spack --env . config add "packages:all:require:[target=${{matrix.target}}]"

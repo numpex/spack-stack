@@ -4,6 +4,8 @@ spack:
       optional: true
     - path: site
       optional: true
+    - path: common
+      optional: true
   specs:
     - cxx
     - cmake

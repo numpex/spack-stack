@@ -6,10 +6,12 @@
 #
 # It combines
 #   projects/<project>/spack.yaml          (what to install)
+#   common/spack/*.yaml                   (repos shared by all machines)
 #   platforms/<site>/config.sh            (site variables, Spack location)
 #   platforms/<site>/<arch>/spack/*.yaml   (externals, packages, repos)
 # into the Spack environment "<project>-<arch>--<version>" (version.txt),
-# with the site configuration assembled under <env>/site/.
+# with the stack configuration assembled under <env>/common/ and the site
+# configuration under <env>/site/.
 #
 # Steps (run in this order by default, `--step` runs only one):
 #   spack        clone Spack and bootstrap it                 (needs internet)
@@ -112,7 +114,8 @@ project_yaml="${TOOLCHAIN_ROOT}/projects/${project}/spack.yaml"
 for f in externals.yaml packages.yaml; do
     [[ -f "${conf_dir}/${f}" ]] || die "missing ${conf_dir}/${f}"
 done
-[[ -f "${conf_dir}/repos.yaml" ]] || warn "no repos.yaml for ${platform}/${arch}: Spack's default builtin repository will be used"
+# Machine-specific repos.yaml is optional: the stack-level configuration in
+# common/spack/ already provides the package repositories shared by all machines.
 
 # ------------------------------------------------------------- site config
 # Spack's setup-env.sh (sourced by config.sh) is not `set -u` clean.
@@ -176,6 +179,8 @@ step_env() {
     local env_dir
     env_dir="$(spack location --env "${env_name}")"
     cp "${project_yaml}" "${env_dir}/spack.yaml"
+    mkdir --parents "${env_dir}/common"
+    cp -r "${TOOLCHAIN_ROOT}/common/spack/". "${env_dir}/common/"
     mkdir --parents "${env_dir}/site"
     cp -r "${conf_dir}"/. "${env_dir}/site/"
 

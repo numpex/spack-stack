@@ -1,9 +1,0 @@
----
-repos:
-  patches:
-    git: https://github.com/gyselax/spack.git
-    branch: releases/v2026.10
-    destination: $spack/var/spack/repos/patches-v2026.10
-  builtin:
-    branch: releases/v2026.10
-    destination: $spack/var/spack/repos/builtin-v2026.10

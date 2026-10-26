@@ -1,0 +1,21 @@
+---
+# Stack-level Spack configuration, shared by all machines and projects.
+# Like the machine-specific platforms/<site>/<arch>/spack/, it is assembled
+# into the environment by install.sh (and CI), through the optional `common/`
+# include: machine entries in `repos:` are merged on top of the ones below.
+#
+# gyselax: the GYSELAX fork of Spack, with recipes of the GYSELA stack not
+# available in the builtin repository (ddc, gmgpolar, gysela-xpp, ...).
+# Machines extend `paths` with their own sub-repositories from the same fork.
+# builtin: the builtin package repository, pinned to the branch matching the
+# Spack release of this stack (spack-version.txt).
+repos:
+  gyselax:
+    git: https://github.com/gyselax/spack.git
+    branch: releases/v2026.10
+    paths:
+      - spack_repo/patches_common
+    destination: $spack/var/spack/repos/gyselax-v2026.10
+  builtin:
+    branch: releases/v2026.10
+    destination: $spack/var/spack/repos/builtin-v2026.10
