@@ -100,6 +100,15 @@ compiler settings, reusable downstream with `cmake -C <toolchain.cmake>`.
   envisioned: a *lite* image with Spack and a minimal stack (read-only, usable
   as an `upstreams:` for local writable installations), and *release* images
   with the full stacks pre-installed.
+- **Spack upstream interface for site installs**: generate the Spack
+  configuration that exposes an installed stack (`upstreams.yaml`,
+  `compilers.yaml`, `repos.yaml`, `packages.yaml`) next to the installation
+  tree, so that developers build their own applications against the stack
+  with their own Spack instance, without rebuilding its dependencies.
+- **uenv integration**: distribute the stacks as
+  [uenv](https://github.com/eth-cscs/uenv) images, mounted read-only as user
+  environments on the machines that support it, for users who do not use
+  Spack at all.
 - **Per-target environments**: split the environment definitions along the
   accelerator axis (`cpu`, `cuda`, `rocm`) instead of relying only on
   site-level requirements such as `cuda_arch=120`, for the stacks that need
