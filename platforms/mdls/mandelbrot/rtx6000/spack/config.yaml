@@ -1,0 +1,8 @@
+---
+# Installs stay in the default tree under
+# SPACK_PREFIX, so that install.sh's group-sharing of the prefix covers them.
+config:
+  install_tree:
+    padded_length: 256
+  build_stage:
+    - /rtx/${USER}/spack-stage

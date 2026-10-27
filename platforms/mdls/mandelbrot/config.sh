@@ -10,13 +10,14 @@ fi
 # `module` may be missing in non-interactive shells (e.g. under srun)
 if command -v module >/dev/null 2>&1; then module purge; fi
 
-export SPACK_GROUP="${PROJECT}"
-export SPACK_JOBS=96
+# Local MDLS cluster: no allocation variables, unlike the CINES/IDRIS sites
+export SPACK_GROUP="maison"
+export SPACK_JOBS=64
 SPACK_VERSION="$(tr -d '[:space:]' < "$(dirname -- "$(readlink -f -- "${BASH_SOURCE[0]}")")/../../../spack-version.txt")"
 export SPACK_VERSION
-export SPACK_PREFIX=${ALL_CCFRSCRATCH}/mandelbrot-spack-${SPACK_VERSION}
+export SPACK_PREFIX="/local/home/maison/spack/mandelbrot-spack-${SPACK_VERSION}"
 
-export PYTHONPYCACHEPREFIX="${ALL_CCFRSCRATCH}/pycache"
+export PYTHONPYCACHEPREFIX="/rtx/${USER}/pycache"
 export SPACK_DISABLE_LOCAL_CONFIG=true
 
 if [ -f "${SPACK_PREFIX}/share/spack/setup-env.sh" ]; then
