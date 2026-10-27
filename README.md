@@ -2,8 +2,7 @@
 
 [![CI](https://github.com/numpex/spack-stack/actions/workflows/ci.yaml/badge.svg)](https://github.com/numpex/spack-stack/actions/workflows/ci.yaml)
 
-Spack environments for the software stacks of [NumPEx](https://numpex.org)
-applications together with
+Spack environments for the software stacks of [NumPEx](https://numpex.org) applications together with
 everything needed to install them on HPC platforms:
 
 - **ready-to-use Spack environments** for each software stack (`projects/`);
@@ -15,8 +14,42 @@ everything needed to install them on HPC platforms:
 
 ![Overview](image.png)
 
+This repository serves two kinds of users — most of this README is about the
+second:
 
-## Install a stack on an HPC platform
+- **anywhere** (a container, another machine): [reuse the binaries built by
+  CI](#reuse-the-ci-built-binaries);
+- **on one of the supported HPC platforms**: [install a stack with
+  `install.sh`](#install-a-stack-on-an-hpc-platform).
+
+## Installation instructions
+
+### Reuse the CI-built binaries
+
+CI builds every `projects/` stack **generically**, and only that: on
+GitHub-hosted ubuntu-24.04 runners, with the system compiler of the runner
+image and `x86_64`/`x86_64_v3` targets, using the runner "site" configuration
+in `.github/spack/` — no site-specific settings are involved. The resulting
+packages are pushed to the public OCI binary cache on
+`ghcr.io/numpex/spack-stack`, so they can benefit all users rather than a
+single site: packages with a matching ABI (e.g. containers based on
+ubuntu 24.04) are downloaded instead of rebuilt from source.
+
+To point a Spack environment at the cache, add it as a mirror:
+
+```yaml
+mirrors:
+  spack-stack:
+    url: oci://ghcr.io/numpex/spack-stack
+    binary: true
+    source: false
+    signed: false
+```
+
+For container images on top of these stacks, see [containerized/](containerized/).
+
+
+### Install a stack on an HPC platform
 
 `install.sh` combines the following inputs into a Spack environment named
 `<project>-<arch>--<version>` (version from [`version.txt`](version.txt)):
@@ -41,14 +74,6 @@ Example on CINES Adastra:
 $ ./install.sh --platform cines/adastra --arch mi300 --project <project>
 ```
 
-By default it runs the following steps in order (run only one with `--step <step>`):
-
-1. **spack** — clone Spack (release pinned in [`spack-version.txt`](spack-version.txt)) and bootstrap it *(needs internet)*
-2. **env** — (re)create the environment, update the package repositories, optionally detect system packages *(needs internet)*
-3. **concretize** — concretize and report the lockfile
-4. **mirror** — download all sources to a local mirror *(Slurm mode only)*
-5. **install** — build and install
-
 On sites where compute nodes have no internet access (e.g. Jean-Zay), enable Slurm mode
 with `--slurm-account <account>` (or the `SLURM_ACCOUNT` variable): sources are mirrored
 from the login node, and `concretize`/`install` run on GPU compute nodes through `srun`.
@@ -66,3 +91,7 @@ completion the installation tree is shared with the site group.
 
 The Adastra and Jean-Zay architectures also ship a `toolchain.cmake` with the recommended
 compiler settings, reusable downstream with `cmake -C <toolchain.cmake>`.
+
+## Similar projects
+
+[https://github.com/sandialabs/spack-manager](Spack-Manager) - a project and machine deployment model using Spack
