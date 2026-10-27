@@ -1,11 +1,10 @@
-# env-installer
+# millefeuille
 
 [![CI](https://github.com/numpex/spack-stack/actions/workflows/ci.yaml/badge.svg)](https://github.com/numpex/spack-stack/actions/workflows/ci.yaml)
 
-Spack environments for the software stacks of [NumPEx](https://numpex.org) applications together with
-everything needed to install them on HPC platforms:
+Lean and opinionated deployment helpers for Spack. This repository contains:
 
-- **ready-to-use Spack environments** for each software stack (`projects/`);
+- **ready-to-use Spack environments** for each software stack [NumPEx](https://numpex.org) in `projects/`;
 - **a unified installer**, [`install.sh`](install.sh), which builds a stack on a supported
   HPC platform, combining the stack definition with site-specific configuration
   (externals, compilers, package repositories);
@@ -92,6 +91,26 @@ completion the installation tree is shared with the site group.
 The Adastra and Jean-Zay architectures also ship a `toolchain.cmake` with the recommended
 compiler settings, reusable downstream with `cmake -C <toolchain.cmake>`.
 
+
+## Planned features
+
+- **Container images built by CI**: turn the generic CI builds into versioned
+  container images published next to the binary cache, so container users get a
+  runnable artifact instead of a mirror configuration. Two flavors are
+  envisioned: a *lite* image with Spack and a minimal stack (read-only, usable
+  as an `upstreams:` for local writable installations), and *release* images
+  with the full stacks pre-installed.
+- **Per-target environments**: split the environment definitions along the
+  accelerator axis (`cpu`, `cuda`, `rocm`) instead of relying only on
+  site-level requirements such as `cuda_arch=120`, for the stacks that need
+  genuinely different spec sets per target.
+
 ## Similar projects
 
-[https://github.com/sandialabs/spack-manager](Spack-Manager) - a project and machine deployment model using Spack
+[Spack-Manager](https://github.com/sandialabs/spack-manager) - a project and machine deployment model using Spack
+
+[spack-configs](https://github.com/spack/spack-configs) - share Spack configuration files with other HPC sites
+
+[E4S](https://github.com/E4S-Project/e4s) - the HPC-AI Software Ecosystem for Science
+
+[Stackinator](https://github.com/eth-cscs/stackinator) - a tool for building a scientific software stack
