@@ -94,6 +94,9 @@ compiler settings, reusable downstream with `cmake -C <toolchain.cmake>`.
 
 ## Planned features
 
+- **Develop workflows**: how `spack develop` can be integrated into current
+  workflows? The goal would be to install an environment and then develop
+  some packages from it.
 - **Container images built by CI**: turn the generic CI builds into versioned
   container images published next to the binary cache, so container users get a
   runnable artifact instead of a mirror configuration. Two flavors are
