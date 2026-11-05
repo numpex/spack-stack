@@ -123,3 +123,5 @@ compiler settings, reusable downstream with `cmake -C <toolchain.cmake>`.
 [E4S](https://github.com/E4S-Project/e4s) - the HPC-AI Software Ecosystem for Science
 
 [Stackinator](https://github.com/eth-cscs/stackinator) - a tool for building a scientific software stack
+
+[spack-stack](https://github.com/JCSDA/spack-stack) - a framework for installing software libraries to support a wide range of numerical weather prediction and data assimilation systems.
