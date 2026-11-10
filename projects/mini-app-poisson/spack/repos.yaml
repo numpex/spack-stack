@@ -1,0 +1,11 @@
+---
+# Project-level recipes: the GYSELAX fork of Spack, with recipes of the GYSELA
+# stack not available in the builtin repository (ddc, gmgpolar, gysela-xpp,
+# ...).
+repos:
+  gyselax:
+    git: https://github.com/gyselax/spack.git
+    branch: releases/v2026.10
+    paths:
+      - spack_repo/patches_common
+    destination: $spack/var/spack/repos/gyselax-v2026.10

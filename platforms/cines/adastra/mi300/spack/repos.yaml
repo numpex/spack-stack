@@ -1,8 +1,5 @@
 ---
-# Machine-specific recipes, merged over common/repos.yaml: the gyselax
-# fork also provides a patched cray-mpich recipe on this Cray machine
-# (site-specific GPU transport layer setup).
+# Machine-specific recipes, maintained in-tree in ../../repos/spack_repo/adastra/:
+# a patched cray-mpich recipe (GPU transport layer setup on Cray machines).
 repos:
-  gyselax:
-    paths:
-      - spack_repo/patches_adastra
+  adastra: $env/site/repos/spack_repo/adastra

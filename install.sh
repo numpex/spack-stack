@@ -7,11 +7,15 @@
 # It combines
 #   projects/<project>/spack.yaml          (what to install)
 #   projects/<project>/spack/*.yaml         (optional project-level config)
+#   projects/<project>/platforms/<site>/<arch>/spack/*.yaml
+#                                           (optional, this project on this machine)
 #   common/*.yaml                          (repos shared by all machines)
 #   platforms/<site>/config.sh            (site variables, Spack location)
 #   platforms/<site>/<arch>/spack/*.yaml   (externals, packages, repos)
+#   platforms/<site>/repos/                (optional machine-level package repos)
 # into the Spack environment "<project>-<arch>--<version>" (version.txt),
-# with the project configuration assembled under <env>/project/, the stack
+# with the project configuration assembled under <env>/project/, the
+# project-on-machine configuration under <env>/project-site/, the stack
 # configuration under <env>/common/ and the site configuration under
 # <env>/.
 #
@@ -110,6 +114,7 @@ platform_dir="${TOOLCHAIN_ROOT}/platforms/${platform}"
 conf_dir="${platform_dir}/${arch}/spack"
 project_yaml="${TOOLCHAIN_ROOT}/projects/${project}/spack.yaml"
 project_conf_dir="${TOOLCHAIN_ROOT}/projects/${project}/spack"
+project_site_conf_dir="${TOOLCHAIN_ROOT}/projects/${project}/platforms/${platform}/${arch}/spack"
 
 [[ -f "${platform_dir}/config.sh" ]] || die "unknown platform '${platform}' (available: $(list_platforms "${TOOLCHAIN_ROOT}/platforms"))"
 [[ -d "${conf_dir}" ]] || die "unknown arch '${arch}' for ${platform} (available: $(list_dirs "${platform_dir}" spack/packages.yaml))"
@@ -186,11 +191,22 @@ step_env() {
     cp -r "${TOOLCHAIN_ROOT}/common/". "${env_dir}/common/"
     mkdir --parents "${env_dir}/site"
     cp -r "${conf_dir}"/. "${env_dir}/site/"
+    # Machine-level package repositories, shared by all architectures
+    if [[ -d "${platform_dir}/repos" ]]; then
+        mkdir --parents "${env_dir}/site/repos"
+        cp -r "${platform_dir}/repos/". "${env_dir}/site/repos/"
+    fi
     # Optional project-level configuration, e.g. package repositories needed
     # by the specs of this project
     if [[ -d "${project_conf_dir}" ]]; then
         mkdir --parents "${env_dir}/project"
         cp -r "${project_conf_dir}"/. "${env_dir}/project/"
+    fi
+    # Optional project-on-a-machine configuration, e.g. recipe patches that
+    # only apply to this project on this machine
+    if [[ -d "${project_site_conf_dir}" ]]; then
+        mkdir --parents "${env_dir}/project-site"
+        cp -r "${project_site_conf_dir}"/. "${env_dir}/project-site/"
     fi
 
     spack -e "${env_name}" repo update

@@ -55,17 +55,19 @@ For container images on top of these stacks, see [containerized/](containerized/
 
 | Input | Option | Files | Content |
 |-------|--------|-------|---------|
-| Stack | — | `common/*.yaml` | package repositories shared by all machines |
+| Stack | — | `common/*.yaml` | the `builtin` repository pinned to the Spack release |
 | Platform | `--platform` | `platforms/<site>/config.sh` | Spack location, parallel jobs, Slurm settings |
 | Architecture | `--arch` | `platforms/<site>/<arch>/spack/*.yaml` | externals, package preferences, machine-specific repositories |
+| Machine (optional) | — | `platforms/<site>/repos/` | machine-level recipe repositories, shared by all architectures (e.g. Adastra's patched `cray-mpich`) |
 | Project | `--project` | `projects/<project>/spack.yaml` | the software stack to install |
-| Project (optional) | — | `projects/<project>/spack/*.yaml` | project-specific repositories (e.g. `ai-inference` uses a `spack-packages` fork for `py-vllm`) |
+| Project (optional) | — | `projects/<project>/spack/*.yaml` | project-specific repositories (the GYSELA projects use the `gyselax` fork; `ai-inference` uses a `spack-packages` fork for `py-vllm`) |
+| Project × machine (optional) | — | `projects/<project>/platforms/<site>/<arch>/spack/*.yaml` | configuration applying to this project on this machine only |
 
 Configuration is merged from the most specific layer to the most general one:
-project, then machine, then stack. For instance, Adastra adds its
-`patches_adastra` sub-repository to the package repositories defined in
-`common/repos.yaml` (the `gyselax` fork of Spack, with the GYSELA recipes, and
-the `builtin` repository pinned to the Spack release).
+project-on-machine, then project, then machine, then stack. Every layer brings
+its own complete package repositories — none extends another layer's — e.g.
+Adastra ships its patched `cray-mpich` recipe in-tree for all projects, while
+only the GYSELA projects pull the `gyselax` fork.
 
 Example on CINES Adastra:
 

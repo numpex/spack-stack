@@ -1,5 +1,7 @@
 spack:
   include:
+    - path: project-site
+      optional: true
     - path: project
       optional: true
     - path: site/externals.yaml
