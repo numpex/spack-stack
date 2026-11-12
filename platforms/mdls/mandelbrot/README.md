@@ -17,8 +17,6 @@ spack config --scope defaults:base add config:install_tree:root:/mdlsstorage/dat
 The `ai-inference` and `ai-stack` projects are configured for the RTX 6000
 GPUs through `rtx6000/spack/`:
 
-- the system `gcc@11.5.0` (`/usr`) is used as the compiler — nothing is built
-  from source except the software stack itself;
 - CUDA is built by Spack from the 12 series (`cuda: require '@12'` picks the
   latest 12.x, matching the old hand-written environments): check with
   `nvidia-smi` that the driver supports it, and tighten the requirement if the

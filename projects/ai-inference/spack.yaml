@@ -10,9 +10,29 @@ spack:
       optional: true
     - path: common
       optional: true
+  # The compiler group bootstraps a recent gcc with the compiler available on
+  # the machine, and the app group prefers it over the system compiler. Sites
+  # pinning their own compiler with a require in packages.yaml take precedence
+  # over this preference.
+  packages:
+    c:
+      prefer:
+      - gcc@14
+    cxx:
+      prefer:
+      - gcc@14
+    fortran:
+      prefer:
+      - gcc@14
   specs:
-    - cxx
-    - py-vllm@0.28
+    - group: compiler
+      specs:
+      - gcc@14
+    - group: app
+      needs: [compiler]
+      specs:
+      - cxx
+      - py-vllm@0.28
   concretizer:
     reuse: false
     unify: true
