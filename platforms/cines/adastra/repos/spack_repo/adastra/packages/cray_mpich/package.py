@@ -5,7 +5,7 @@
 # Patched copy of the builtin cray-mpich recipe, maintained in-tree for the
 # Adastra Cray machine: the GPU transport layer libraries are not found by the
 # upstream recipe on Cray machines, so they are linked explicitly here. This
-# is the same recipe as the one carried by the gyselax fork in patches_common,
+# is the same recipe as the one carried by the gyselax fork in patches,
 # so that every project on this machine gets the same cray-mpich, whether or
 # not it pulls the fork.
 

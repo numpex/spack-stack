@@ -7,5 +7,5 @@ repos:
     git: https://github.com/gyselax/spack.git
     branch: releases/v2026.10
     paths:
-      - spack_repo/patches_common
+      - spack_repo/patches
     destination: $spack/var/spack/repos/gyselax-v2026.10
