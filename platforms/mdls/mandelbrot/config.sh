@@ -1,11 +1,14 @@
 #!/bin/bash
 
-if [ "${BASH_SOURCE[0]}" -ef "$0" ]
+# Guard against direct execution. Only meaningful under bash: zsh sets $0 to
+# the sourced file, so the test cannot distinguish there.
+if [ -n "${BASH_VERSION:-}" ] && [ "${BASH_SOURCE[0]}" -ef "$0" ]
 then
     echo "This script must be sourced not executed."
     echo ". $0"
     exit 1
 fi
+self="$(readlink -f -- "${BASH_SOURCE[0]:-$0}")"
 
 # `module` may be missing in non-interactive shells (e.g. under srun)
 if command -v module >/dev/null 2>&1; then module purge; fi
@@ -13,7 +16,7 @@ if command -v module >/dev/null 2>&1; then module purge; fi
 # Local MDLS cluster: no allocation variables, unlike the CINES/IDRIS sites
 export SPACK_GROUP="maison"
 export SPACK_JOBS=64
-SPACK_VERSION="$(tr -d '[:space:]' < "$(dirname -- "$(readlink -f -- "${BASH_SOURCE[0]}")")/../../../spack-version.txt")"
+SPACK_VERSION="$(tr -d '[:space:]' < "$(dirname -- "${self}")/../../../spack-version.txt")"
 export SPACK_VERSION
 export SPACK_PREFIX="/local/home/maison/spack/mandelbrot-spack-${SPACK_VERSION}"
 

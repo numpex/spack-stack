@@ -4,6 +4,14 @@ packages:
     permissions:
       read: world
       write: group
+    # CI-compatible micro-architecture level, so that the binary cache is
+    # reusable.
+    prefer:
+      - target=x86_64_v3
+  c:
+    require: gcc@14.2.1
+  cxx:
+    require: gcc@14.2.1
   cuda:
     require: '@12'
   py-torch:
