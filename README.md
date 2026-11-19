@@ -9,11 +9,13 @@ Lean and opinionated deployment helpers for Spack. This repository contains:
   HPC platform, combining the stack definition with site-specific configuration
   (externals, compilers, package repositories);
 - **an OCI binary cache** on `ghcr.io/numpex/spack-stack`, continuously filled by CI, so
-  that matching packages are downloaded instead of rebuilt from source.
+  that matching packages are downloaded instead of rebuilt from source. Script
+  [`migrate_oras.sh`](migrate_oras.sh) migrates that cache from one GHCR repository to
+  another using ORAS.
 
 ![Overview](image.png)
 
-This repository serves two kinds of users — most of this README is about the
+This repository serves two kinds of users. Most of this README is about the
 second:
 
 - **anywhere** (a container, another machine): [reuse the binaries built by
