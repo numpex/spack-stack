@@ -157,6 +157,10 @@ mirror_dir="${SPACK_PREFIX}/var/spack/mirror"
 load_spack() {
     local setup="${SPACK_PREFIX}/share/spack/setup-env.sh"
     [[ -f "${setup}" ]] || die "Spack not found in ${SPACK_PREFIX} (run with --step spack first)"
+    # An environment activated in the calling shell is inherited through SPACK_ENV,
+    # and `spack env remove` refuses to remove the active environment. All spack
+    # calls below name their environment explicitly, so drop any ambient one.
+    unset SPACK_ENV
     set +u
     # shellcheck disable=SC1090
     . "${setup}"
@@ -299,7 +303,10 @@ else
 fi
 
 trap 'trap - EXIT; fix_permissions' EXIT
-trap 'echo "error: failed (environment ${env_name}, line ${LINENO})" >&2' ERR
+# With `set -E` the ERR trap is inherited by all functions, including spack's
+# shell wrapper from setup-env.sh: LINENO then points into that sourced file,
+# not into this script.
+trap 'echo "error: failed (environment ${env_name}, line ${LINENO} in ${BASH_SOURCE[0]##*/})" >&2' ERR
 
 if [[ "${step}" == all ]]; then
     steps=(spack env concretize)
