@@ -1,4 +1,4 @@
-# 🍰 millefeuille
+# 🍰 spack-stack
 
 [![CI](https://github.com/numpex/spack-stack/actions/workflows/ci.yaml/badge.svg)](https://github.com/numpex/spack-stack/actions/workflows/ci.yaml)
 
