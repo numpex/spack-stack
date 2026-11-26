@@ -18,6 +18,11 @@ spack:
     - mpi
     - paraconf@1.0
     - pdi@1.11
+    - pdiplugin-decl-hdf5@1.11 +mpi
+    - pdiplugin-mpi@1.11
+    - pdiplugin-pycall@1.11
+    - pdiplugin-set-value@1.11
+    - pdiplugin-trace@1.11
 
     - py-dask
     - py-dask-ml@2025.1
