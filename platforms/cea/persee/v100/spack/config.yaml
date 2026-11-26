@@ -1,0 +1,8 @@
+---
+config:
+  install_tree:
+    padded_length: 256
+  # TODO(persee-operators): point build_stage at scratch storage if the
+  # default (/tmp) is too small for large builds.
+  # build_stage:
+  #   - /data/scratch/${USER}/spack-stage

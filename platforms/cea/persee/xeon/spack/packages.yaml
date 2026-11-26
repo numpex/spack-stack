@@ -1,0 +1,17 @@
+---
+packages:
+  all:
+    permissions:
+      read: world
+      write: group
+    # CI-compatible micro-architecture level, so that the binary cache is
+    # reusable.
+    # TODO(persee-operators): micro-architecture of the xeon nodes.
+    prefer:
+      - target=x86_64_v3
+  c:
+    require: gcc@13
+  cxx:
+    require: gcc@13
+  fortran:
+    require: gcc@13

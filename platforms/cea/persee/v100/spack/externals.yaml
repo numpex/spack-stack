@@ -1,0 +1,18 @@
+---
+# TODO(persee-operators): exact version and installation prefix of the
+# compiler behind `module load gcc/13` on the v100 nodes, and of CUDA (nvcc):
+# from a module (declare it as external below) or built by Spack.
+packages:
+  gcc:
+    externals:
+    - spec: gcc@13.2.0 languages:='c,c++,fortran'
+      prefix: /usr
+      extra_attributes:
+        compilers:
+          c: /usr/bin/gcc
+          cxx: /usr/bin/g++
+          fortran: /usr/bin/gfortran
+  # cuda:
+  #   externals:
+  #   - spec: cuda@12.9
+  #     prefix: /usr/local/cuda

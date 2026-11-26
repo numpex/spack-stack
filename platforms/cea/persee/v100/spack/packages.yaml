@@ -1,0 +1,22 @@
+---
+packages:
+  all:
+    permissions:
+      read: world
+      write: group
+    # TODO(persee-operators): micro-architecture of the v100 nodes.
+    prefer:
+      - target=x86_64_v3
+  c:
+    require: gcc@13
+  cxx:
+    require: gcc@13
+  fortran:
+    require: gcc@13
+  # NVIDIA V100 = Volta, compute capability 7.0. `+wrapper` provides
+  # nvcc_wrapper, used by the v100 toolchain.cmake.
+  kokkos:
+    require: '+cuda +wrapper cuda_arch=70'
+  # TODO(persee-operators): highest CUDA version supported by the driver.
+  cuda:
+    require: '@12'

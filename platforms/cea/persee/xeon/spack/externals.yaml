@@ -1,0 +1,13 @@
+---
+# TODO(persee-operators): exact version and installation prefix of the
+# compiler behind `module load gcc/13` on the xeon nodes.
+packages:
+  gcc:
+    externals:
+    - spec: gcc@13.2.0 languages:='c,c++,fortran'
+      prefix: /usr
+      extra_attributes:
+        compilers:
+          c: /usr/bin/gcc
+          cxx: /usr/bin/g++
+          fortran: /usr/bin/gfortran
