@@ -50,8 +50,8 @@ Binary caches can be useful to tackle this issue, as packages already compiled w
 
 ```yaml
 mirrors:
-  numpex-spack-mirror:
-    url: oci://ghcr.io/thomas-bouvier/numpex-spack-mirror
+  spack-stack:
+    url: oci://ghcr.io/numpex/spack-stack
     access_pair:
       id_variable: OCI_USERNAME_VARIABLE
       secret_variable: OCI_PASSWORD_VARIABLE
@@ -77,7 +77,7 @@ spack install
 Once the compilation is successful, push all binaries to your buildcache:
 
 ```bash
-OCI_USERNAME_VARIABLE=aaa OCI_PASSWORD_VARIABLE=zzz spack buildcache push --update-index --tag latest numpex-spack-mirror
+OCI_USERNAME_VARIABLE=aaa OCI_PASSWORD_VARIABLE=zzz spack buildcache push --update-index --tag latest spack-stack
 ```
 
 You can finally launch the real build in a non-interactive way (binaries will be retrieved from the buildcache). Build with the Dockerfile as input:

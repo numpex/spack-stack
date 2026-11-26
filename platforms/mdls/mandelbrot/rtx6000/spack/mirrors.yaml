@@ -1,8 +1,8 @@
 ---
 mirrors:
-  numpex-spack-mirror:
-    url: oci://ghcr.io/numpex/numpex-spack-mirror
+  spack-stack:
+    url: oci://ghcr.io/numpex/spack-stack
+    binary: true
+    source: false
+    signed: false
     autopush: false
-    access_pair:
-      id_variable: OCI_USERNAME_VARIABLE
-      secret_variable: OCI_PASSWORD_VARIABLE

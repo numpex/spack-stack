@@ -67,8 +67,8 @@ set -o noclobber \
 &&   echo '    builtin:' \
 &&   echo '      branch: releases/v2026.06' \
 &&   echo '  mirrors:' \
-&&   echo '    numpex-spack-mirror:' \
-&&   echo '      url: oci://ghcr.io/thomas-bouvier/numpex-spack-mirror' \
+&&   echo '    spack-stack:' \
+&&   echo '      url: oci://ghcr.io/numpex/spack-stack' \
 &&   echo '      access_pair:' \
 &&   echo '        id_variable: OCI_USERNAME_VARIABLE' \
 &&   echo '        secret_variable: OCI_PASSWORD_VARIABLE' \

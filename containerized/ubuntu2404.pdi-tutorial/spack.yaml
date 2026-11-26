@@ -57,8 +57,8 @@ spack:
     builtin:
       branch: releases/v2026.06
   mirrors:
-    numpex-spack-mirror:
-      url: oci://ghcr.io/thomas-bouvier/numpex-spack-mirror
+    spack-stack:
+      url: oci://ghcr.io/numpex/spack-stack
       access_pair:
         id_variable: OCI_USERNAME_VARIABLE
         secret_variable: OCI_PASSWORD_VARIABLE
