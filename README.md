@@ -36,7 +36,7 @@ packages are pushed to the public OCI binary cache on
 single site: packages with a matching ABI (e.g. containers based on
 ubuntu 24.04) are downloaded instead of rebuilt from source.
 
-To point a Spack environment at the cache, add it as a mirror:
+To point a Spack environment at the cache, simply add it as a mirror:
 
 ```yaml
 mirrors:
@@ -46,6 +46,22 @@ mirrors:
     source: false
     signed: false
 ```
+
+> [!IMPORTANT]
+> 
+> You would need an authorized pair of GitHub login/ghcr token to push binaries to the buildcache:
+>
+> ```yaml
+> mirrors:
+>   spack-stack:
+>     url: oci://ghcr.io/numpex/spack-stack
+>     access_pair:
+>       id_variable: OCI_USERNAME_VARIABLE
+>       secret_variable: OCI_PASSWORD_VARIABLE
+>     binary: true
+>     source: false
+>     signed: false
+> ```
 
 For container images on top of these stacks, see [containerized/](containerized/).
 
